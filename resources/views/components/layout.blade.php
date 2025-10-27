@@ -18,7 +18,7 @@
                     <x-nav-link href="/about" :active="Route::currentRouteName() === 'about'">
                         A propos
                     </x-nav-link>
-                    <x-nav-link href="/projects" :active="Route::currentRouteName() === 'projects'">
+                    <x-nav-link href="/projects" :active="Route::is('projects*')">
                         Projects
                     </x-nav-link>
                 </ul>
