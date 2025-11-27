@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Cours ESGI' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @fluxAppearance
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
     <header class="bg-white shadow">
@@ -38,5 +39,6 @@
             <p>&copy; {{ date('Y') }} - Cours ESGI Laravel</p>
         </div>
     </footer>
+    @fluxScripts
 </body>
 </html>
