@@ -21,8 +21,7 @@
                 label="Description du projet" 
                 placeholder="Ex : Mon projet porte sur..."
                 name="description"
-                :value="old('description')"
-            ></flux:textarea>
+            >{{ old('description') }}</flux:textarea>
 
             <flux:button type="submit">Enregistrer le projet</flux:button>
         </form>
