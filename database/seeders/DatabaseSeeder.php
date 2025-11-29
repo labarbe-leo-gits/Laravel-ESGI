@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Technologies;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,13 +20,15 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         // Create admin
-        User::factory()->create([
-            'name' => 'Joffrey Persia',
-            'email' => 'joffrey.persia@gmail.com',
+        User::updateOrCreate(
+        ['email' => 'labarbe.leo2308@gmail.com'],  // Condition unique
+        [
+            'name' => 'Léo Labarbe',
             'password' => Hash::make('password123'),
-        ]);
+        ]
+    );
 
         // Seed projects
-        $this->call(ProjectsSeeder::class);
+        $this->call(ProjectsSeeder::class, TechnologiesSeeder::class);
     }
 }

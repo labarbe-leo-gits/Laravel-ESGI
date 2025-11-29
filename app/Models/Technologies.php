@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Technologies extends Model
 {
     /**
      * Get the attributes that should be cast.
@@ -15,12 +14,9 @@ class Project extends Model
     protected function casts(): array
     {
         return [
-            'title' => 'string',
-            'description' => 'string',
-            'technologies' => 'array',      // JSON → Array
+            'name' => 'string',
             'created_at' => 'datetime',     // Timestamp → Carbon DateTime
             'updated_at' => 'datetime',     // Timestamp → Carbon DateTime
-            'published' => 'boolean',
         ];
     }
 
@@ -29,11 +25,11 @@ class Project extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['title', 'description', 'status', 'technologies'];
+    protected $fillable = ['name'];
 
-    public function techs()
+    public function projects()
     {
-        return $this->belongsToMany(Technologies::class, 'projects_technologies', 'project_id', 'technology_id');
+        return $this->belongsToMany(Project::class, 'projects_technologies', 'technology_id', 'project_id');
     }
 
 }
