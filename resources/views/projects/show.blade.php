@@ -21,13 +21,38 @@
         @endif
 
         <p>Technologies via la base de données</p>
-        <ul class="mt-4 list-disc list-inside">
+        <ul class="mt-4 list-disc list-inside mb-10">
             @if ($project->techs->count() <= 0)
                 <li>Aucune technologie associée.</li>
             @endif
             @foreach ($project->techs as $technology)
                 <li>{{ $technology->name }}</li>
             @endforeach
+
+        </ul>
+
+        <h3 class="font-bold mt-10">Tâches du projet</h3>
+        <div class="mt-4">
+            @if ($project->tasks->count() <= 0)
+                <p>Aucune tâche associée.</p>
+            @endif
+            @foreach ($project->tasks as $task)
+                <div class="flex items-center bg-gray-200 p-4 rounded mb-2 @if($task->status == 1) opacity-50 line-through @endif">
+                    <p>{{ $task->name }}
+                        @if ($task->status == 0)
+                        <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="inline-block ml-4">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="name" value="{{ $task->name }}">
+                            <input type="hidden" name="description" value="{{ $task->description }}">
+                            <input type="hidden" name="status" value="1">
+                            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">✓</button>
+                        </form>
+                        @endif
+                    </p>
+                </div>
+            @endforeach
+            </div>
 
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
             @csrf

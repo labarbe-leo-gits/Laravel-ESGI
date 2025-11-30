@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('projects.index')" :active="Route::is('projects.*')">
                         Projets
                     </x-nav-link>
+                    <x-nav-link :href="route('tasks.index')" :active="Route::is('tasks.*')">
+                        Tâches
+                    </x-nav-link>
                     <x-nav-link :href="route('about')" :active="Route::is('about')">
                         A propos
                     </x-nav-link>

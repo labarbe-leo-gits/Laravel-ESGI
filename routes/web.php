@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TasksController;
 use App\Models\Project;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ Route::get('/test-flux', function () {
 // })->name('projects.index');
 
 Route::resource('projects', ProjectController::class);
+Route::resource('tasks', TasksController::class);
 
 Route::get('/contact', function () {
     return view('contact');
