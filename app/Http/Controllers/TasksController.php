@@ -57,8 +57,7 @@ class TasksController extends Controller
      */
     public function edit(Tasks $task)
     {
-        $projects = Project::all();
-        return view('tasks.edit', compact('task'), compact('projects'));
+        return view('tasks.edit', compact('task'));
     }
 
     /**

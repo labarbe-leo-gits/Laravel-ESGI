@@ -1,19 +1,9 @@
 <x-layout>
     <div class="max-w-2xl mx-auto py-8 w-full">
         @if (session()->has('success'))
-            <div class="mb-4">
-                <div x-data="{ visible: true }" x-show="visible" x-collapse>
-                    <div x-show="visible" x-transition>
-                        <flux:callout icon="check-circle" color="green">
-                            <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
-
-                            <x-slot name="controls">
-                                <flux:button icon="x-mark" variant="ghost" x-on:click="visible = false" />
-                            </x-slot>
-                        </flux:callout>
-                    </div>
-                </div>
-            </div>
+            <flux:callout icon="check-circle" variant="success" class="mb-4">
+                <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
+            </flux:callout>
         @endif
 
         <a href="{{ route('projects.index') }}" class="italic text-slate-500">← Retour aux projets</a>
@@ -30,7 +20,7 @@
             </ul>
         @endif
 
-        <p class="mt-4">Technologies via la base de données:</p>
+        <p>Technologies via la base de données</p>
         <ul class="mt-4 list-disc list-inside mb-10">
             @if ($project->techs->count() <= 0)
                 <li>Aucune technologie associée.</li>
@@ -77,11 +67,9 @@
 
                 </div>
             @endforeach
-
         </div>
 
-        <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
-            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
+        <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
             @csrf
             @method('DELETE')
 
