@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <ul class="mt-4 list-disc list-inside">
+    <ul class="m-4 list-disc list-inside">
         @foreach ($projects as $project)
             <li><a href="{{ route('projects.show', $project->id) }}"
                     class="underline text-blue-800">{{ $project['title'] }}</a></li>

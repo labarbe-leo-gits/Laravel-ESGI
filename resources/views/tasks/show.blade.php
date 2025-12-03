@@ -17,14 +17,15 @@
         @endif
 
         <div class="w-full flex justify-between gap-4">
-            <h1>{{ $task->name }}</h1>
-            <flux:button href="{{ route('tasks.index') }}">← Retour aux tâches</flux:button>
+            <a href="{{ route('tasks.index') }}" class="italic text-slate-500">← Retour aux tâches</a>
             <flux:button href="{{ route('tasks.edit', $task->id) }}">Modifier</flux:button>
         </div>
 
-        <p class="my-4">{{ $task->description }}</p>
+        <h1 class="my-8">{{ $task->name }}</h1>
+        <p class="mb-4"><strong>Projet : </strong> {{ $task->project->title }}</p>
+        <p class="my-4"><strong>Description : </strong> {{ $task->description }}</p>
 
-        <p class="my-4">Statut :
+        <p class="my-4"><strong>Statut : </strong> :
             @if ($task->status == 1)
                 <span class="text-green-600 font-bold">Terminée</span>
             @else
