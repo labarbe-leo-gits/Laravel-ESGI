@@ -1,9 +1,19 @@
 <x-layout>
     <div class="max-w-2xl mx-auto py-8 w-full">
         @if (session()->has('success'))
-            <flux:callout icon="check-circle" variant="success" class="mb-4">
-                <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
-            </flux:callout>
+            <div class="mb-4">
+                <div x-data="{ visible: true }" x-show="visible" x-collapse>
+                    <div x-show="visible" x-transition>
+                        <flux:callout icon="check-circle" color="green">
+                            <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
+
+                            <x-slot name="controls">
+                                <flux:button icon="x-mark" variant="ghost" x-on:click="visible = false" />
+                            </x-slot>
+                        </flux:callout>
+                    </div>
+                </div>
+            </div>
         @endif
 
         <a href="{{ route('projects.index') }}" class="italic text-slate-500">← Retour aux projets</a>
@@ -37,22 +47,23 @@
                 <p>Aucune tâche associée.</p>
             @endif
             @foreach ($project->tasks as $task)
-                <div class="flex items-center bg-gray-200 p-4 rounded mb-2 @if($task->status == 1) opacity-50 line-through @endif">
+                <div
+                    class="flex items-center bg-gray-200 p-4 rounded mb-2 @if($task->status == 1) opacity-50 line-through @endif">
                     <p>{{ $task->name }}
                         @if ($task->status == 0)
-                        <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="inline-block ml-4">
-                            @csrf
-                            @method('PATCH')
-                            <input type="hidden" name="name" value="{{ $task->name }}">
-                            <input type="hidden" name="description" value="{{ $task->description }}">
-                            <input type="hidden" name="status" value="1">
-                            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">✓</button>
-                        </form>
+                            <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="inline-block ml-4">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="name" value="{{ $task->name }}">
+                                <input type="hidden" name="description" value="{{ $task->description }}">
+                                <input type="hidden" name="status" value="1">
+                                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">✓</button>
+                            </form>
                         @endif
                     </p>
                 </div>
             @endforeach
-            </div>
+        </div>
 
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
             @csrf

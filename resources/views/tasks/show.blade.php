@@ -1,9 +1,19 @@
 <x-layout>
     <div class="max-w-2xl mx-auto py-8 w-full">
         @if (session()->has('success'))
-            <flux:callout icon="check-circle" variant="success" class="mb-4">
-                <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
-            </flux:callout>
+            <div class="mb-4">
+                <div x-data="{ visible: true }" x-show="visible" x-collapse>
+                    <div x-show="visible" x-transition>
+                        <flux:callout icon="check-circle" color="green">
+                            <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
+
+                            <x-slot name="controls">
+                                <flux:button icon="x-mark" variant="ghost" x-on:click="visible = false" />
+                            </x-slot>
+                        </flux:callout>
+                    </div>
+                </div>
+            </div>
         @endif
 
         <div class="w-full flex justify-between gap-4">
@@ -14,13 +24,13 @@
 
         <p class="my-4">{{ $task->description }}</p>
 
-        <p class="my-4">Statut : 
+        <p class="my-4">Statut :
             @if ($task->status == 1)
                 <span class="text-green-600 font-bold">Terminée</span>
             @else
                 <span class="text-red-600 font-bold">En cours</span>
             @endif
         </p>
-        
+
     </div>
 </x-layout>
