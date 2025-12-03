@@ -1,9 +1,19 @@
 <x-layout>
     <div class="max-w-2xl mx-auto py-8 w-full">
         @if (session()->has('success'))
-            <flux:callout icon="check-circle" variant="success" class="mb-4">
-                <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
-            </flux:callout>
+            <div class="mb-4">
+                <div x-data="{ visible: true }" x-show="visible" x-collapse>
+                    <div x-show="visible" x-transition>
+                        <flux:callout icon="check-circle" color="green">
+                            <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
+
+                            <x-slot name="controls">
+                                <flux:button icon="x-mark" variant="ghost" x-on:click="visible = false" />
+                            </x-slot>
+                        </flux:callout>
+                    </div>
+                </div>
+            </div>
         @endif
 
         <a href="{{ route('projects.index') }}" class="italic text-slate-500">← Retour aux projets</a>
@@ -20,7 +30,7 @@
             </ul>
         @endif
 
-        <p>Technologies via la base de données</p>
+        <p class="mt-4">Technologies via la base de données:</p>
         <ul class="mt-4 list-disc list-inside mb-10">
             @if ($project->techs->count() <= 0)
                 <li>Aucune technologie associée.</li>
@@ -47,11 +57,11 @@
                         @method('PATCH')
                         <input type="hidden" name="name" value="{{ $task->name }}">
                         <input type="hidden" name="description" value="{{ $task->description }}">
-                        <input type="hidden" name="status" value="{{ $task->status == 1 ? 0 : 1 }}">
+                        <input type="hidden" name="status" value="{{ $task->status ? 0 : 1 }}">
 
                         <flux:button type="submit"
                             class="px-3 py-2 bg-gray-500 text-white rounded hover:bg-green-400 flex items-center justify-center">
-                            <flux:icon.check-circle :class="$task->status == 1 ? 'text-green-600' : 'text-gray-400'" />
+                            <flux:icon.check-circle variant="{{ $task->status ? 'solid' : 'outline' }}" />
                         </flux:button>
                     </form>
 
@@ -67,9 +77,11 @@
 
                 </div>
             @endforeach
+
         </div>
 
-        <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
+        <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
+            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
             @csrf
             @method('DELETE')
 
