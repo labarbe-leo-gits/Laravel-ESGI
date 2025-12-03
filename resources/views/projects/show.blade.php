@@ -49,6 +49,9 @@
             @foreach ($project->tasks as $task)
                 <div class="flex items-center bg-gray-200 p-4 rounded mb-2 space-x-4">
                     <div class="@if($task->status) opacity-50 line-through @endif flex-1">
+                        @if($task->status)
+                            <flux:icon.check-circle class="inline-block mr-2 text-green-600" variant="solid" />
+                        @endif
                         {{ $task->name }}
                     </div>
 
