@@ -32,7 +32,7 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|min:5',
             'description' => 'required|string',
             'project_id' => 'required|exists:projects,id',
         ]);

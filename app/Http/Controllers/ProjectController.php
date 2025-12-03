@@ -31,7 +31,7 @@ class ProjectController extends Controller
     {
         // dd($request->all());
         $validated = $request->validate([
-            'title' => 'required|max:5',
+            'title' => 'required|max:255|min:5',
             'description' => 'required',
             // 'url' => '...',
             // ‘status' => '...',
