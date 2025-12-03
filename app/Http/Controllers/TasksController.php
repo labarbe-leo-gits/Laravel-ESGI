@@ -57,8 +57,7 @@ class TasksController extends Controller
      */
     public function edit(Tasks $task)
     {
-        $projects = Project::all();
-        return view('tasks.edit', compact('task'), compact('projects'));
+        return view('tasks.edit', compact('task'));
     }
 
     /**
@@ -77,8 +76,7 @@ class TasksController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|required|string',
-            'status' => 'sometimes|required|boolean',
-            'project_id' => 'required',
+            'status' => 'sometimes|required|boolean'
         ]);
 
         $task->update($validated);

@@ -5,34 +5,39 @@
             {{ session('success') }}, vous allez être redirigé(e)...
         </div>
         <script>
-            setTimeout(function () {
+            setTimeout(function() {
                 window.location.href = "{{ route('tasks.show', $task->id) }}";
             }, 2000);
         </script>
     @endif
 
     <div class="max-w-2xl mx-auto py-8 w-full">
-        <a href="{{ route('tasks.show', $task->id) }}" class="italic text-slate-500">← Quitter l'édition</a>
+        <a
+            href="{{ route('tasks.show', $task->id) }}"
+            class="italic text-slate-500"
+        >← Quitter l'édition</a>
         <h1 class="mb-6">Modifier la tâche</h1>
         <form action="/tasks/{{ $task->id }}" method="POST" class="space-y-6">
             @csrf
             @method('PUT')
-            <flux:input label="Titre de la tâche" placeholder="Ex : Ma super tâche" required name="name"
-                :value="old('title', $task->name)" />
-            {{--
-            <flux:input label="URL du projet" placeholder="Ex: mon-nouveau-projet" required name="url" /> --}}
-            <flux:textarea label="Description de la tâche" placeholder="Ex : Ma tâche porte sur..." name="description">
-                {{ old('description', $task->description) }}
-            </flux:textarea>
-
-            <flux:select label="Projet associé" name="project_id" required>
-                <option value="" disabled selected>Choisir un projet</option>
-                @foreach($projects as $project)
-                    <option @if($project->id === $task->project->sid) selected @endif value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
-                        {{ $project->title }}
-                    </option>
-                @endforeach
-            </flux:select>
+            <flux:input 
+                label="Titre de la tâche" 
+                placeholder="Ex : Ma super tâche" 
+                required
+                name="name"
+                :value="old('title', $task->name)"
+            />
+            {{-- <flux:input
+                label="URL du projet"
+                placeholder="Ex: mon-nouveau-projet"
+                required
+                name="url"
+            /> --}}
+            <flux:textarea 
+                label="Description de la tâche" 
+                placeholder="Ex : Ma tâche porte sur..."
+                name="description"
+            >{{ old('description', $task->description) }}</flux:textarea>
 
             <flux:button type="submit">Enregistrer la tâche</flux:button>
         </form>

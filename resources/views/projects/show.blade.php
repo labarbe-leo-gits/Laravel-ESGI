@@ -1,19 +1,9 @@
 <x-layout>
     <div class="max-w-2xl mx-auto py-8 w-full">
         @if (session()->has('success'))
-            <div class="mb-4">
-                <div x-data="{ visible: true }" x-show="visible" x-collapse>
-                    <div x-show="visible" x-transition>
-                        <flux:callout icon="check-circle" color="green">
-                            <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
-
-                            <x-slot name="controls">
-                                <flux:button icon="x-mark" variant="ghost" x-on:click="visible = false" />
-                            </x-slot>
-                        </flux:callout>
-                    </div>
-                </div>
-            </div>
+            <flux:callout icon="check-circle" variant="success" class="mb-4">
+                <flux:callout.heading>{{ session('success') }}</flux:callout.heading>
+            </flux:callout>
         @endif
 
         <a href="{{ route('projects.index') }}" class="italic text-slate-500">← Retour aux projets</a>
@@ -30,7 +20,7 @@
             </ul>
         @endif
 
-        <p class="mt-4">Technologies via la base de données:</p>
+        <p>Technologies via la base de données</p>
         <ul class="mt-4 list-disc list-inside mb-10">
             @if ($project->techs->count() <= 0)
                 <li>Aucune technologie associée.</li>
@@ -47,41 +37,24 @@
                 <p>Aucune tâche associée.</p>
             @endif
             @foreach ($project->tasks as $task)
-                <div class="flex items-center bg-gray-200 p-4 rounded mb-2 space-x-4">
-                    <div class="@if($task->status) opacity-50 line-through @endif flex-1">
-                        {{ $task->name }}
-                    </div>
-
-                    <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="inline-block">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" name="name" value="{{ $task->name }}">
-                        <input type="hidden" name="description" value="{{ $task->description }}">
-                        <input type="hidden" name="status" value="{{ $task->status ? 0 : 1 }}">
-
-                        <flux:button type="submit"
-                            class="px-3 py-2 bg-gray-500 text-white rounded hover:bg-green-400 flex items-center justify-center">
-                            <flux:icon.check-circle variant="{{ $task->status ? 'solid' : 'outline' }}" />
-                        </flux:button>
-                    </form>
-
-                    <form action="/tasks/{{ $task->id }}" method="POST"
-                        onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
-                        @csrf
-                        @method('DELETE')
-
-                        <flux:button variant="danger" type="submit">
-                            <flux:icon.trash />
-                        </flux:button>
-                    </form>
-
+                <div class="flex items-center bg-gray-200 p-4 rounded mb-2 @if($task->status == 1) opacity-50 line-through @endif">
+                    <p>{{ $task->name }}
+                        @if ($task->status == 0)
+                        <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="inline-block ml-4">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="name" value="{{ $task->name }}">
+                            <input type="hidden" name="description" value="{{ $task->description }}">
+                            <input type="hidden" name="status" value="1">
+                            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">✓</button>
+                        </form>
+                        @endif
+                    </p>
                 </div>
             @endforeach
+            </div>
 
-        </div>
-
-        <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
-            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
+        <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
             @csrf
             @method('DELETE')
 
