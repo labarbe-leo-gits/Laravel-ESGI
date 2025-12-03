@@ -57,11 +57,11 @@
                         @method('PATCH')
                         <input type="hidden" name="name" value="{{ $task->name }}">
                         <input type="hidden" name="description" value="{{ $task->description }}">
-                        <input type="hidden" name="status" value="{{ $task->status ? 0 : 1 }}">
+                        <input type="hidden" name="status" value="{{ $task->status == 1 ? 0 : 1 }}">
 
                         <flux:button type="submit"
                             class="px-3 py-2 bg-gray-500 text-white rounded hover:bg-green-400 flex items-center justify-center">
-                            <flux:icon.check-circle variant="{{ $task->status ? 'solid' : 'outline' }}" />
+                            <flux:icon.check-circle :class="$task->status == 1 ? 'text-green-600' : 'text-gray-400'" />
                         </flux:button>
                     </form>
 

@@ -78,7 +78,7 @@ class TasksController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|required|string',
             'status' => 'sometimes|required|boolean',
-            'project_id' => 'required',
+            'project_id' => 'sometimes|required',
         ]);
 
         $task->update($validated);
