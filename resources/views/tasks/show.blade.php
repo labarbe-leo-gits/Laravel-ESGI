@@ -25,7 +25,7 @@
         <p class="mb-4"><strong>Projet : </strong> {{ $task->project->title }}</p>
         <p class="my-4"><strong>Description : </strong> {{ $task->description }}</p>
 
-        <p class="my-4"><strong>Statut : </strong> :
+        <p class="my-4"><strong>Statut : </strong>
             @if ($task->status == 1)
                 <span class="text-green-600 font-bold">Terminée</span>
             @else

@@ -81,7 +81,7 @@
         </div>
 
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
-            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
+            onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
             @csrf
             @method('DELETE')
 

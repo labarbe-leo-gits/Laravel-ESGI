@@ -28,7 +28,7 @@
             <flux:select label="Projet associé" name="project_id" required>
                 <option value="" disabled selected>Choisir un projet</option>
                 @foreach($projects as $project)
-                    <option @if($project->id === $task->project->sid) selected @endif value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
+                    <option @if($project->id === $task->project->id) selected @endif value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
                         {{ $project->title }}
                     </option>
                 @endforeach
